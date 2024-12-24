@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Usuários{% endblock %}
+{% block subtitle %}Usuários{% endblock %}
+{% block content %}
+<button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#new-user">Novo Usuário</button>
+<table class="table table-hover table-dark mt-4">
+    <thead>
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Usuário</th>
+            <th scope="col">Tipo</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in object_list %}
+        <tr>
+            <td scope="row">{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.username }}</td>
+            {% if user.is_superuser %}
+            <td>Administrador</td>
+            {% else %}
+            {% if user.is_staff %}
+            <td>Profissional</td>
+            {% else %}
+            <td>Cliente</td>
+            {% endif %}
+            {% endif %}
+            <td>
+                <a class="btn btn-light" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-bars"></i></a>
+                <ul class="dropdown-menu dropdown-menu-left">
+                    <button type="button" class="btn btn-light w-100" data-bs-toggle="modal" data-bs-target="#edit-user-{{ user.pk }}"><i class="fa-solid fa-pen-to-square"></i> Editar</button>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% include 'user/md-new-user.html' %}
+{% for user in object_list %}
+{% include 'user/md-edit-user.html' %}
+{% endfor %}
+{% endblock %}

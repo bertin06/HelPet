@@ -1,0 +1,30 @@
+<div class="modal fade" id="finish" tabindex="-1" aria-labelledby="finish" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="finish">Finalizar Ocorrência</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Conclusão</span>
+                        </div>
+                        <select name="conclusion" class="form-control" required>
+                            <option value=""></option>
+                            <option value="2">Animal foi resgatado com sucesso</option>
+                            <option value="3">Animal não foi resgatado com sucesso</option>
+                            <option value="4">Ocorrência indevida</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Concluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

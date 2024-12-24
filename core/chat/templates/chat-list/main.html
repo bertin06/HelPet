@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Meus Chats{% endblock %}
+{% block subtitle %}Meus Chats{% endblock %}
+{% block content %}
+{% if not request.user.is_superuser and not request.user.is_staff %}
+<form action="" method="post" class="mt-4">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="new-chat">
+    <button type="submit" class="btn btn-primary">Abrir Novo Chat</button>
+</form>
+{% endif %}
+<div class="row">
+    {% for chat in object_list %}
+    <div class="col-4">
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="room" value="{{ chat.pk }}">
+            <input type="hidden" name="action" value="open-chat">
+            <button type="submit" class="panel mt-4 d-flex justify-content-between room-panel {% if chat.status == 0 %}bg-secondary{% else %}{% if chat.status == 1 %}bg-primary{% else %}{% if chat.status == 2 %}bg-success{% else %}{% if chat.status == 3 %}bg-warning{% else %}bg-danger{% endif %}{% endif %}{% endif %}{% endif %}">
+                <h4>Sala {{ chat.pk }}</h5>
+                {% if request.user.is_staff %}
+                <label>{{ chat.fkusercli.first_name }} {{ chat.fkusercli.last_name }}</label>
+                {% else %}
+                <label>{{ chat.fkuserpro.first_name }} {{ chat.fkuserpro.last_name }}</label>
+                {% endif %}
+            </button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

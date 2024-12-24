@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Início{% endblock %}
+{% block subtitle %}Relatórios{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <canvas id="chart-occurrences"></canvas>
+            <input type="hidden" id="occurrences-data" value="{{ occurrences }}">
+        </div>
+        <div class="col-6">
+            <canvas id="chart-messages" height="300"></canvas>
+            <input type="hidden" id="total-messages" value="{{ total_messages }}">
+            <input type="hidden" id="date-messages", value="{{ date_messages }}">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/reports.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load emoji %}
+{% block title %}Chat{% endblock %}
+{% block subtitle %}
+<a href="{% url 'chat-list' %}" class="btn btn-primary"><i class="fa-solid fa-circle-left"></i> Voltar</a> 
+{% if request.user.is_staff %}
+{% if tbroom.status == 0 or tbroom.status == 1 %}
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#finish"><i class="fa-solid fa-circle-check"></i> Finalizar Ocorrência</button>
+{% endif %}
+{% endif %}
+Sala {{ room }}
+{% endblock %}
+{% block content %}
+<div id="chat-panel" class="col-12 bg-dark mt-2">
+    <div id="chat-log">
+        <div id="chat-log-row" class="row">
+            {% for i in tbmessages %}
+            {% if i.fkuser.pk == request.user.pk %}
+            <div class="col-6"></div>
+            <div class="col-6 d-flex justify-content-end">
+                <a class="self-message btn btn-primary mt-2" href="#" data-bs-toggle="dropdown">
+                    {{ emoji|convert:i.message }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-left">
+                </ul>
+            </div>
+            {% else %}
+            <div class="col-6">
+                <a class="other-message btn btn-light mt-2" href="#" data-bs-toggle="dropdown">
+                    {{ emoji|convert:i.message }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-left">
+                </ul>
+            </div>
+            <div class="col-6"></div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% if tbroom.status == 0 or tbroom.status == 1 %}
+    <form id="form" class="message-form">
+        {% csrf_token %}
+        <div class="input-group">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emojis"><i class="fa-solid fa-face-smile"></i></button>
+            <input class="form-control" id="chat-message-input" type="text" name="message" placeholder="Digite sua mensagem aqui..." required>
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            <input type="hidden" value="{{ request.user.pk }}" name="user" id="user">
+            <input type="hidden" value="{{ room }}" name="room" id="room">
+        </div>
+    </form>
+    {% endif %}
+</div>
+{% include 'chat/md-emojis.html' %}
+{% include 'chat/md-finish.html' %}
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/scroll.js' %}"></script>
+<script src="{% static 'js/ws-connector.js' %}"></script>
+<script src="{% static 'js/emoji-picker.js' %}"></script>
+{% endblock %}

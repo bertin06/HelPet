@@ -1,0 +1,47 @@
+<div class="modal fade" id="edit-user-{{ user.pk }}" tabindex="-1" aria-labelledby="edit-user" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit-user">Cadastro de Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="text" class="form-control" name="username" placeholder="Usuário" required value="{{ user.username }}">
+                    <input type="text" class="form-control mt-2" name="first_name" placeholder="Nome" required value="{{ user.first_name }}">
+                    <input type="text" class="form-control mt-2" name="last_name" placeholder="Sobrenome" value="{{ user.last_name }}">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Tipo</span>
+                        </div>
+                        <select name="type" class="form-control" required>
+                            <option value=""></option>
+                            {% if user.is_superuser %}
+                            <option value="1" selected>Administrador</option>
+                            {% else %}
+                            <option value="1">Administrador</option>
+                            {% endif %}
+                            {% if not user.is_superuser and not user.is_staff %}
+                            <option value="2" selected>Cliente</option>
+                            {% else %}
+                            <option value="2">Cliente</option>
+                            {% endif %}
+                            {% if user.is_staff and not user.is_superuser %}
+                            <option value="3" selected>Profissional</option>
+                            {% else %}
+                            <option value="3">Profissional</option>
+                            {% endif %}
+                        </select>
+                        <input type="hidden" name="action" value="edit-user">
+                        <input type="hidden" name="user" value="{{ user.pk }}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

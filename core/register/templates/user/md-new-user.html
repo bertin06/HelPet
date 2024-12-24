@@ -1,0 +1,35 @@
+<div class="modal fade" id="new-user" tabindex="-1" aria-labelledby="new-user" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="new-user">Cadastro de Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="text" class="form-control" name="username" placeholder="Usuário" required>
+                    <input type="text" class="form-control mt-2" name="first_name" placeholder="Nome" required>
+                    <input type="text" class="form-control mt-2" name="last_name" placeholder="Sobrenome">
+                    <input type="password" class="form-control mt-2" name="password" placeholder="Senha" required>
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Tipo</span>
+                        </div>
+                        <select name="type" class="form-control" required>
+                            <option value=""></option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Cliente</option>
+                            <option value="3">Profissional</option>
+                        </select>
+                        <input type="hidden" name="action" value="new-user">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
